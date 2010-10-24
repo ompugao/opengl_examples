@@ -1,0 +1,20 @@
+#include <GL/glut.h>
+
+class Window{
+private:
+  int m_width;
+  int m_height;
+  int n_bpp:
+  bool m_fullscreen;
+  string m_title;
+public:
+  Window();
+  virtual ~Window();
+  bool createWindow(int width, int height, int bpp, bool fullscreen, const string& title);
+  void setSize(int width, int height);
+  int getHeight();
+  int getWidth();
+};
+
+bool Window::createWindow(int width, int height, int bpp, bool fullscreen, const string& title){
+  i

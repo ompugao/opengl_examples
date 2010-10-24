@@ -1,0 +1,49 @@
+* クラスObjectのメンバ変数を追加する
+** メモリ確保が必要
+    1.object.cpp内で定義されているコピーコンストラクタに追記する
+** メモリ確保が不必要
+    1.object.cpp内で定義されているコンストラクタに追記する
+    2.object.cpp内で定義されているデストラクタに追記する
+    3.object.cpp内で定義されているコピーコンストラクタに追記する
+
+* 既存の敵の追加方法
+** プログラム開始時から存在する場合
+    1.initialize.cpp内で定義されている関数object_init()内でadd_object()を呼ぶ
+** プログラム実行中に途中で追加される場合
+    1.保留(AllDisplay()から呼ばれる関数内で処理する予定)
+
+* 新しいmoveの追加方法
+    1.object.hの最初で宣言されている列挙型MOVE_TYPEのラベルを追加
+      弾以外Local,弾以外World,敵弾Local,自弾Localに分かれているので該当するところに追加
+    2.object.hで宣言されているクラスObjectにprotectedな関数move_***()を追加
+    3.object.cppで定義されている関数Object::move()内のswitchの場合分けの追加
+    4.move.cppで関数move_***()を定義
+
+* 新しいdetailの追加方法
+    1.object.hの最初で宣言されている列挙型DETAIL_TYPEのラベルを追加
+    2.object.hで宣言されているクラスObjectにprotectedな関数detail_***()を追加
+    3.object.cppで定義されている関数Object::detail()内のswitchの場合分けの追加
+    4.detail.cppで関数detail_***()を定義
+
+* MOVE_TYPE説明
+- 関数add_object()で呼び出すときの引数
+- detail_array辺りがカオスなのは十分承知、代替案募集
+** CIRCLE
+- 円軌道
+-- coordにはNULLを入れて呼ぶ
+-- vが角速度
+-- (detail_array[0][0],detail_array[0][1],detail_array[0][2])が中心座標
+--- デフォルトの中心座標は原点
+-- (detail_array[1][0],detail_array[1][1],detail_array[1][2])が回転平面の法線ベクトル
+--- デフォルトの法線ベクトルは(0,0,1)
+-- detail_array[2][0]が半径,detail_array[2][1]は初期角度(rad),detail_array[2][2]は使われない
+---デフォルトの半径は100,初期角度は0
+** LISS
+- リサージュ軌道
+- vが角速度
+- (detail_array[0][0],detail_array[0][1],detail_array[0][2])が中心座標
+- detail_array[1][0]はxの角度の係数,detail_array[1][1]はyの角度の係数,detail_array[1][2]は位相差
+- detail_array[2][0]がx方向半径,detail_array[2][1]はy方向半径,detail_array[2][2]には初期角度を渡し内部で角度を保存するのに使用
+- 変数の個数の関係で法線ベクトルは指定できず
+- 軌道の接線方向を向くようにしようとしたがうまくいかず
+
