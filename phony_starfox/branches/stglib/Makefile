@@ -18,7 +18,7 @@ all: depend $(PROGRAM)
 	
 
 $(PROGRAM): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 .cpp.o:
 	$(CXX) $(CXXFLAGS) -c $<

@@ -8,8 +8,8 @@ PROGRAM = product
 RM = rm -f
 
 CXX = g++
-CXXFLAGS = -g -Wall
-LDFLAGS = -lGL -lGLU -lglut -lm
+CXXFLAGS = -g -Wall $(pkg-config gl --cflags) $(pkg-config glew --cflags) 
+LDFLAGS = -lGL -lGLU -lglut 
 
 .PHONY: all depend clean
 .SUFFIXES: .cpp .o
@@ -18,7 +18,7 @@ all: depend $(PROGRAM)
 	
 
 $(PROGRAM): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS) 
 
 .cpp.o:
 	$(CXX) $(CXXFLAGS) -c $<
